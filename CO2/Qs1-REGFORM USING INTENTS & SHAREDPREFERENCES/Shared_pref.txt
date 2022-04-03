@@ -1,0 +1,46 @@
+package com.example.shared;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+    EditText e1,e2;
+    Button bt;
+    TextView t1,t2,t6,t7;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        e1 = (EditText)findViewById(R.id.e1);
+        e2 = (EditText)findViewById(R.id.e2);
+        bt = (Button)findViewById(R.id.btn);
+        t1 = (TextView)findViewById(R.id.t1);
+        t2 = (TextView)findViewById(R.id.t2);
+        t6 = (TextView)findViewById(R.id.t6);
+        t7 = (TextView)findViewById(R.id.t7);
+
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedpref = getSharedPreferences("pref",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpref.edit();
+                editor.putString("key1",e1.getText().toString());
+                editor.putString("key2",e2.getText().toString());
+                editor.apply();
+            }
+        });
+        SharedPreferences getsharedValue = getSharedPreferences("pref",MODE_PRIVATE);
+        String value1 = getsharedValue.getString("key1","default value");
+        t6.setText(value1);
+        String value2 = getsharedValue.getString("key2","default value");
+        t7.setText(value2);
+
+    }
+}
